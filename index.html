@@ -31,9 +31,62 @@
             </h1>
           </v-app-bar>
           <v-container>
+            <v-row class="mt-2">
+              <v-spacer></v-spacer>
+              <v-col cols="12" sm="6" md="5" lg="3">
+                <p class="mt-4">請輸入身分證字號後3碼</p>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
             <v-row>
-              <v-col>
-                <p class="mt-5 text-h5 text-center">請輸入身分證字號後3碼</p>
+              <v-spacer></v-spacer>
+              <v-col cols="12" sm="6" md="5" lg="3">
+                <v-text-field
+                  label="身分證後3碼"
+                  placeholder="025"
+                  solo
+                  maxlength="3"
+                  v-model="input.idNo"
+                  :rules="[rules.required, rules.idNo]"
+                ></v-text-field>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+            <v-row>
+              <v-spacer></v-spacer>
+              <v-col cols="12" sm="6" md="5" lg="3">
+                <p class="text-center">請選擇登記的加碼券</p>
+                <v-checkbox
+                  v-for="(extraBonus, idx) in extraBonusList"
+                  :key="'extra-bonus'+idx"
+                  v-model="input.registerExtraBonus"
+                  :label="extraBonus.name"
+                  :value="idx"
+                  dense
+                  hide-details
+                ></v-checkbox>
+              </v-col>
+              <v-spacer></v-spacer>
+
+              <v-col cols="12" class="text-center">
+                <v-btn color="primary" elevation="2" @click="CheckWin"
+                  >查詢</v-btn
+                >
+              </v-col>
+            </v-row>
+            <v-row v-if="showOutput" class="text-center">
+              <v-col cols="12">
+                <p class="text-center">查詢結果</p>
+                <p class="text-left">身分證後三碼： {{output.idNo}}</p>
+                <p
+                  class="text-left"
+                  v-for="(extraBonusIdx, idx) in output.win"
+                  :key="idx"
+                >
+                  第{{idx+1}}週： {{extraBonusIdx === null ? "未中獎" :
+                  extraBonusList[extraBonusIdx].name}}
+                </p>
+                <p>{{input}}</p>
               </v-col>
             </v-row>
           </v-container>
@@ -50,6 +103,6 @@
       integrity="sha512-KR8HalseemML9F5HysbCoUVYkkhE1Tm0wvrHKcHrEvvHqzO4cs7W0g4wMAd/8Se+bSXizb7bQX/WLdYTeNlG+A=="
       crossorigin="anonymous"
     ></script>
-    <script src="main.js"></script>
+    <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
