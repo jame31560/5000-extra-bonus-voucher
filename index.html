@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900"
       rel="stylesheet"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css"
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css"
       rel="stylesheet"
     />
+
     <link
       href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="style.css" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
@@ -85,10 +87,14 @@
                   v-for="(extraBonusIdx, idx) in output.win"
                   :key="idx"
                 >
-                  第{{idx+1}}週： {{extraBonusIdx === null ? "未中獎" :
-                  extraBonusList[extraBonusIdx].name}}
+                  第{{idx+1}}週：
+                  <span
+                    :class="[extraBonusIdx === null ? 'red--text' : 'green--text']"
+                  >
+                    {{extraBonusIdx === null ? "未中籤/尚未抽籤" :
+                    extraBonusList[extraBonusIdx].name}}
+                  </span>
                 </p>
-                <p>{{input}}</p>
               </v-col>
               <v-spacer></v-spacer>
             </v-row>
@@ -124,6 +130,35 @@
             </v-row>
           </v-container>
         </v-main>
+        <v-footer dark padless>
+          <v-card class="flex" flat tile>
+            <v-card-title class="red accent-1">
+              <span class="text-subtitle-1">注意事項：</span>
+              <span class="text-subtitle-1">
+                此站僅供使用者方便查看中籤號碼，非官方網站，中籤號碼暫時為手動更新，若有資料錯誤或未更新狀況，請以<a
+                  href="https://vhpi.5000.gov.tw/"
+                  class="link"
+                  >五倍券官網</a
+                >為主。
+              </span>
+
+              <v-spacer></v-spacer>
+
+              <v-btn
+                class="mx-4"
+                dark
+                icon
+                href="https://github.com/james02288/5000-extra-bonus-voucher"
+              >
+                <v-icon>mdi-github</v-icon>
+              </v-btn>
+            </v-card-title>
+
+            <v-card-text class="py-2 white--text text-center">
+              {{ new Date().getFullYear() }} — <strong>JaoJaoLin 傑姆士</strong>
+            </v-card-text>
+          </v-card>
+        </v-footer>
       </v-app>
     </div>
     <script
