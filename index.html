@@ -85,10 +85,14 @@
                   v-for="(extraBonusIdx, idx) in output.win"
                   :key="idx"
                 >
-                  第{{idx+1}}週： {{extraBonusIdx === null ? "未中獎" :
-                  extraBonusList[extraBonusIdx].name}}
+                  第{{idx+1}}週：
+                  <span
+                    :class="[extraBonusIdx === null ? 'red--text' : 'green--text']"
+                  >
+                    {{extraBonusIdx === null ? "未中籤/尚未抽籤" :
+                    extraBonusList[extraBonusIdx].name}}
+                  </span>
                 </p>
-                <p>{{input}}</p>
               </v-col>
               <v-spacer></v-spacer>
             </v-row>
