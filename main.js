@@ -1,3 +1,4 @@
+const WEEKS = 4;
 const EXTRA_BONUS_LIST = [
   {
     id: "domesticTravel",
@@ -87,22 +88,31 @@ const EXTRA_BONUS_LIST = [
       "w4": [],
     }
   }
-]
+];
+
 
 new Vue({
   el: '#app',
   data() {
     return {
       rules: {
-        required: value => !!value || '此欄位為必填.',
+        required: value => !!value || '此欄位為必填',
         idNo: value => {
           const pattern = /^[0-9]{3}$/
           return pattern.test(value) || '請輸入三個數字'
         },
+        checkboxRequired: value => !!value.length || '請至少選擇一項',
+        sports: value => {
+          if (this.input.registerExtraBonus.includes(3) && this.input.registerExtraBonus.includes(4)) {
+            return "紙本、數位藝Fun券只能擇一選擇"
+          }
+          return true
+        }
       },
-      weeks: 4,
+      weeks: 0,
       extraBonusList: [],
       input: {
+        valid: false,
         idNo: "",
         registerExtraBonus: []
       },
@@ -118,14 +128,31 @@ new Vue({
   },
   methods: {
     Init() {
+      this.weeks = this.GetWeeks();
       this.extraBonusList = this.GetExtraBonusList();
+    },
+    GetWeeks() {
+      return WEEKS;
     },
     GetExtraBonusList() {
       return EXTRA_BONUS_LIST
     },
     CheckWin() {
+      this.input.registerExtraBonus.sort();
       this.output.idNo = this.input.idNo;
       this.showOutput = true;
+    },
+    Reset() {
+      this.ClearOutput();
+      this.showOutput = false;
+    },
+    ClearInput() {
+      this.input.idNo = "";
+      this.input.registerExtraBonus = [];
+    },
+    ClearOutput() {
+      this.output.idNo = "";
+      this.output.win = [];
     }
   },
   vuetify: new Vuetify(),
