@@ -204,6 +204,10 @@ new Vue({
       this.ClearOutput();
       this.showOutput = false;
     },
+    SelectAll(){
+      let extraBonusArrayAll = Array.from(Array(this.extraBonusList.length).keys());
+      this.input.registerExtraBonus = extraBonusArrayAll.filter((item) => {return ![3,4].includes(item)});
+    },
     ClearInput() {
       this.input.idNo = "";
       this.input.registerExtraBonus = [];
