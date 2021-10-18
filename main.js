@@ -150,7 +150,9 @@ new Vue({
         idNo: "",
         win: []
       },
-      showOutput: false
+      showOutput: false,
+      showDetail: false,
+      detailTab: 0,
     };
   },
   mounted() {
@@ -204,9 +206,9 @@ new Vue({
       this.ClearOutput();
       this.showOutput = false;
     },
-    SelectAll(){
+    SelectAll() {
       let extraBonusArrayAll = Array.from(Array(this.extraBonusList.length).keys());
-      this.input.registerExtraBonus = extraBonusArrayAll.filter((item) => {return ![3,4].includes(item)});
+      this.input.registerExtraBonus = extraBonusArrayAll.filter((item) => { return ![3, 4].includes(item) });
     },
     ClearInput() {
       this.input.idNo = "";

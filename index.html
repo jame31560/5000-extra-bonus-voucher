@@ -2,6 +2,18 @@
 <html lang="zh-tw">
   <head>
     <meta charset="UTF-8" />
+    <meta
+      name="description"
+      content="快速查詢您的五倍加碼券抽籤結果，只要輸入身分證字號末三碼，即可快速查詢到您的中籤券別，不再錯過你的國旅券、農遊券、藝Fun券、i原券、動滋券、客庄券、地方創生券，放大你的五倍券。"
+    />
+    <meta property="og:title" content="振興五倍加碼券抽籤 | 中籤快速查詢" />
+    <meta
+      property="og:description"
+      content="快速查詢您的五倍加碼券抽籤結果，只要輸入身分證字號末三碼，即可快速查詢到您的中籤券別，不再錯過你的國旅券、農遊券、藝Fun券、i原券、動滋券、客庄券、地方創生券，放大你的五倍券。"
+    />
+    <meta property="og:image" content="https://i.imgur.com/qSdvJec.jpg" />
+    <meta property="og:url" content="https://5000.jaojaolin.com/" />
+    <meta property="og:site_name" content="振興五倍加碼券抽籤 | 中籤快速查詢" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link
       href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900"
@@ -21,7 +33,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
     />
-    <title>五倍券抽籤 - 中籤快速查詢</title>
+    <title>振興五倍加碼券抽籤 | 中籤快速查詢</title>
   </head>
   <body>
     <div id="app">
@@ -42,7 +54,7 @@
               <v-row class="mt-2">
                 <v-spacer></v-spacer>
                 <v-col cols="12" sm="6" md="5" lg="3">
-                  <p class="mt-4">請輸入身分證字號後3碼</p>
+                  <p class="mb-0">請輸入身分證字號後3碼</p>
                 </v-col>
                 <v-spacer></v-spacer>
               </v-row>
@@ -100,6 +112,11 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="text-center">
+                <a href="javascript:;" class="link" @click="showDetail = true">
+                  查看全部中籤號碼
+                </a>
+              </v-col>
+              <v-col cols="12" class="text-center">
                 <v-btn
                   v-if="!showOutput"
                   color="error"
@@ -136,6 +153,11 @@
                   重新查詢
                 </v-btn>
               </v-col>
+              <v-col v-if="!showOutput" cols="12" class="text-center">
+                <span class="text-body-2 grey--text text--darken-2">
+                  ※全選功能不會選擇藝Fun券，請依照您的藝Fun券類型選擇。
+                </span>
+              </v-col>
             </v-row>
           </v-container>
         </v-main>
@@ -144,11 +166,15 @@
             <v-card-title class="red accent-1">
               <span class="text-subtitle-1">注意事項：</span>
               <span class="text-subtitle-1">
-                此站僅供使用者方便查看中籤號碼，非官方網站，中籤號碼暫時為手動更新，若有資料錯誤或未更新狀況，請以<a
+                此站僅供使用者方便查看中籤號碼，非官方網站，中籤號碼暫時為手動更新，若有資料錯誤或未更新狀況，請以
+                <a
+                  target="_blank"
                   href="https://vhpi.5000.gov.tw/"
                   class="link"
-                  >五倍券官網</a
-                >為主。
+                >
+                  五倍加碼券官網
+                </a>
+                為主。
               </span>
 
               <v-spacer></v-spacer>
@@ -168,6 +194,72 @@
             </v-card-text>
           </v-card>
         </v-footer>
+        <v-bottom-sheet v-model="showDetail">
+          <v-sheet class="text-center" height="80vh">
+            <v-btn class="my-6" color="secondary" @click="showDetail = false">
+              返回
+            </v-btn>
+            <v-tabs fixed-tabs v-model="detailTab">
+              <v-tab class="text-subtitle-1" v-for="(week) in weeks">
+                第{{week}}週
+              </v-tab>
+              <v-tabs-items v-model="detailTab">
+                <v-tab-item v-for="(week) in weeks">
+                  <v-card color="basil" flat>
+                    <v-card-text>
+                      <v-simple-table>
+                        <template v-slot:default>
+                          <thead>
+                            <tr>
+                              <th class="text-center text-subtitle-1">
+                                加碼券別
+                              </th>
+                              <th class="text-center text-subtitle-1">
+                                中籤號碼
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              v-for="(extraBonus, idx) in extraBonusList"
+                              :key="`detailBonus${idx}`"
+                            >
+                              <td class="text-subtitle-1">
+                                <a
+                                  :href="extraBonus.url"
+                                  target="_blank"
+                                  class="link text-decoration-none"
+                                >
+                                  {{ extraBonus.name }}
+                                </a>
+                              </td>
+                              <td class="text-left text-subtitle-1">
+                                {{ extraBonus.win[`w${week}`].length > 0 ?
+                                extraBonus.win[`w${week}`].join(",") :
+                                "尚未抽籤/尚未更新" }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </template>
+                      </v-simple-table>
+                      <p class="text-center">
+                        ※以上資料若有錯誤，請以
+                        <a
+                          target="_blank"
+                          href="https://vhpi.5000.gov.tw/"
+                          class="link"
+                        >
+                          五倍加碼券官網
+                        </a>
+                        公告為主。
+                      </p>
+                    </v-card-text>
+                  </v-card>
+                </v-tab-item>
+              </v-tabs-items>
+            </v-tabs>
+          </v-sheet>
+        </v-bottom-sheet>
       </v-app>
     </div>
     <script
