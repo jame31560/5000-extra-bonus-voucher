@@ -111,6 +111,15 @@
                 </v-btn>
                 <v-btn
                   v-if="!showOutput"
+                  color="warning"
+                  elevation="2"
+                  @click="SelectAll"
+                  class="mr-2"
+                >
+                  全選
+                </v-btn>
+                <v-btn
+                  v-if="!showOutput"
                   color="primary"
                   elevation="2"
                   @click="CheckWin"
