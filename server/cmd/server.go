@@ -12,7 +12,6 @@ import (
 	//"github.com/dejavuzhou/md-genie/util"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/robertkrimen/otto"
 	"github.com/spf13/cobra"
 )
@@ -97,7 +96,6 @@ func setData(data string) {
 	}
 
 	buildJson()
-	spew.Dump("QQ")
 }
 
 func buildJson() {
