@@ -47,17 +47,18 @@ func init() {
 }
 
 func server() {
-	//c.AddFunc("30-59/5 10,15 * * *", func() {
+	c.AddFunc("30-59/5 10,15 * * *", func() {
+		reptile()
+		autoCommit()
+	})
+
+	c.Start()
+
+	for {
+	}
+
 	//reptile()
 	//autoCommit()
-	//})
-
-	//c.Start()
-
-	//for {
-	//}
-	reptile()
-	autoCommit()
 }
 
 func reptile() {
