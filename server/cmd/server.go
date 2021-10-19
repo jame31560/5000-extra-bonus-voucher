@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-
+	"os/exec"
 	"server/config"
+	"time"
+
+	//"github.com/dejavuzhou/md-genie/util"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/robertkrimen/otto"
@@ -36,7 +39,11 @@ func init() {
 
 func server() {
 	fmt.Println("Server")
+	autoCommit()
+	//reptile()
+}
 
+func reptile() {
 	data, err := getScriptData()
 	if err != nil {
 		log.Println(err)
@@ -96,5 +103,24 @@ func buildJson() {
 
 	if err != nil {
 		log.Println("write file is failed: ", err)
+	}
+}
+
+// auto git commit
+func autoCommit() {
+	gitAddcmd := exec.Command("git", "add", ".")
+	gitCommitcmd := exec.Command("git", "commit", "-am", fmt.Sprintf("update code.js at %v", time.Now().Format(time.RFC3339)))
+	gitPushcmd := exec.Command("git", "push", "origin", "master")
+
+	if _, err := gitAddcmd.CombinedOutput(); err != nil {
+		log.Println("git add . failed")
+	}
+
+	if _, err := gitCommitcmd.CombinedOutput(); err != nil {
+		log.Println("git commit failed")
+	}
+
+	if _, err := gitPushcmd.CombinedOutput(); err != nil {
+		log.Println("git push failed")
 	}
 }
