@@ -12,6 +12,7 @@ import (
 	//"github.com/dejavuzhou/md-genie/util"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/robertkrimen/otto"
 	"github.com/spf13/cobra"
 )
@@ -38,12 +39,12 @@ func init() {
 }
 
 func server() {
-	fmt.Println("Server")
+	reptile()
 	autoCommit()
-	//reptile()
 }
 
 func reptile() {
+	log.Println("爬蟲開始....")
 	data, err := getScriptData()
 	if err != nil {
 		log.Println(err)
@@ -51,6 +52,8 @@ func reptile() {
 	}
 
 	setData(data)
+
+	log.Println("爬蟲結束~~~~")
 }
 
 func getScriptData() (string, error) {
@@ -94,6 +97,7 @@ func setData(data string) {
 	}
 
 	buildJson()
+	spew.Dump("QQ")
 }
 
 func buildJson() {
@@ -112,14 +116,17 @@ func autoCommit() {
 	gitCommitcmd := exec.Command("git", "commit", "-am", fmt.Sprintf("update code.js at %v", time.Now().Format(time.RFC3339)))
 	gitPushcmd := exec.Command("git", "push", "origin", "master")
 
+	log.Println("git add .")
 	if _, err := gitAddcmd.CombinedOutput(); err != nil {
 		log.Println("git add . failed")
 	}
 
+	log.Println("git commit")
 	if _, err := gitCommitcmd.CombinedOutput(); err != nil {
 		log.Println("git commit failed")
 	}
 
+	log.Println("git push")
 	if _, err := gitPushcmd.CombinedOutput(); err != nil {
 		log.Println("git push failed")
 	}
