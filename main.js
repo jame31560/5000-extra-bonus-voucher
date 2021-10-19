@@ -17,7 +17,7 @@ const EXTRA_BONUS_LIST = [
     url: "https://explorethesun.tw/cipshop/",
     win: {
       w1: ["64", "85"],
-      w2: [],
+      w2: ["12", "59"],
       w3: [],
       w4: []
     }
