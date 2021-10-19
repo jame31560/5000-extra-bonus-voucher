@@ -35,13 +35,18 @@
     />
     <title>振興五倍加碼券抽籤 | 中籤快速查詢</title>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZC4LW4FPQ4"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-ZC4LW4FPQ4"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-ZC4LW4FPQ4');
+      gtag("config", "G-ZC4LW4FPQ4");
     </script>
   </head>
   <body>
@@ -62,14 +67,14 @@
             >
               <v-row class="mt-2">
                 <v-spacer></v-spacer>
-                <v-col cols="12" sm="6" md="5" lg="3">
+                <v-col cols="12" sm="7" md="6" lg="5" xl="3">
                   <p class="mb-0">請輸入身分證字號後3碼</p>
                 </v-col>
                 <v-spacer></v-spacer>
               </v-row>
               <v-row>
                 <v-spacer></v-spacer>
-                <v-col cols="12" sm="6" md="5" lg="3">
+                <v-col cols="12" sm="7" md="6" lg="5" xl="3">
                   <v-text-field
                     label="身分證後3碼"
                     placeholder="025"
@@ -83,7 +88,39 @@
               </v-row>
               <v-row>
                 <v-spacer></v-spacer>
-                <v-col cols="12" sm="6" md="5" lg="3">
+                <v-col cols="12" sm="7" md="6" lg="5" xl="3">
+                  <p>
+                    登記抽籤起始週次<br />
+                    <span
+                      class="text-body-2 red--text text--darken-2 text-indent"
+                    >
+                      由於不同抽次開始參與抽籤會有不同結果，<br />請依照自己的完成登記時間選擇。
+                    </span>
+                  </p>
+                  <v-radio-group v-model="input.startWeek">
+                    <v-radio
+                      label="第1週: 即10/09(六)00:00前完成登記加碼券抽籤。"
+                      :value="1"
+                    ></v-radio>
+                    <v-radio
+                      label="第2週: 即10/16(六)00:00前完成登記加碼券抽籤。"
+                      :value="2"
+                    ></v-radio>
+                    <v-radio
+                      label="第3週: 即10/23(六)00:00前完成登記加碼券抽籤。"
+                      :value="3"
+                    ></v-radio>
+                    <v-radio
+                      label="第4週: 即10/30(六)00:00前完成登記加碼券抽籤。"
+                      :value="4"
+                    ></v-radio>
+                  </v-radio-group>
+                </v-col>
+                <v-spacer></v-spacer>
+              </v-row>
+              <v-row>
+                <v-spacer></v-spacer>
+                <v-col cols="12" sm="7" md="6" lg="5" xl="3">
                   <p>請選擇登記的加碼券</p>
                   <v-checkbox
                     v-for="(extraBonus, idx) in extraBonusList"
@@ -101,7 +138,7 @@
             </v-form>
             <v-row v-if="showOutput" class="mt-2">
               <v-spacer></v-spacer>
-              <v-col cols="12" sm="6" md="5" lg="3">
+              <v-col cols="12" sm="7" md="6" lg="5" xl="3">
                 <p>身分證後三碼： {{output.idNo}}</p>
                 <p
                   class="text-left"
@@ -110,9 +147,10 @@
                 >
                   第{{idx+1}}週：
                   <span
-                    :class="[extraBonusIdx === null ? 'red--text' : 'green--text']"
+                    :class="[extraBonusIdx === null ? idx + 1 < input.startWeek ? 'grey--text' : 'red--text' : 'green--text']"
                   >
-                    {{extraBonusIdx === null ? "未中籤/尚未抽籤" :
+                    {{extraBonusIdx === null ? idx + 1 < input.startWeek ?
+                    "未參與抽籤": "未中籤/尚未抽籤" :
                     extraBonusList[extraBonusIdx].name}}
                   </span>
                 </p>

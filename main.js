@@ -144,6 +144,7 @@ new Vue({
       input: {
         valid: false,
         idNo: "",
+        startWeek: 1,
         registerExtraBonus: []
       },
       output: {
@@ -173,6 +174,11 @@ new Vue({
       this.input.registerExtraBonus.sort();
       // 針對有幾週去運算
       for (let week = 1; week <= this.weeks; week++) {
+        // 如果不再開始抽籤週次，直接回傳null並往下一週前進
+        if (week < this.input.startWeek) {
+          this.output.win.push(null);
+          continue;
+        }
         this.AWeekCheckWin(week);
       }
       this.output.idNo = this.input.idNo;
@@ -181,7 +187,6 @@ new Vue({
     AWeekCheckWin(week) {
       // 遍例各個已登記的加碼券
       for (const extraBonusIdx of this.input.registerExtraBonus) {
-        console.log(`find: week${week}-${extraBonusIdx}`);
 
         // 檢查是否中籤過
         if (this.output.win.includes(extraBonusIdx)) continue;
@@ -189,7 +194,6 @@ new Vue({
         // 產出驗證的正則
         winNums = this.extraBonusList[extraBonusIdx].win[`w${week}`].join("|");
         regx = new RegExp(`(${winNums})$`);
-        console.log(regx);
 
         // 若中籤號碼不為空且符合正則代表中籤
         if (winNums && regx.test(this.input.idNo)) {
@@ -212,6 +216,7 @@ new Vue({
     },
     ClearInput() {
       this.input.idNo = "";
+      this.input.startWeek = 1;
       this.input.registerExtraBonus = [];
     },
     ClearOutput() {
