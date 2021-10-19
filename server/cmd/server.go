@@ -9,10 +9,9 @@ import (
 	"server/config"
 	"time"
 
-	//"github.com/dejavuzhou/md-genie/util"
-
 	"github.com/PuerkitoBio/goquery"
 	"github.com/robertkrimen/otto"
+	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +20,18 @@ const (
 	URL = "https://vhpi.5000.gov.tw/"
 )
 
-// Weeks -
-var Weeks = [4]string{"winNo1", "winNo2", "winNo3", "winNo4"}
+var (
+	// Weeks -
+	Weeks = [4]string{"winNo1", "winNo2", "winNo3", "winNo4"}
+
+	// c -  新建一個定時任務物件
+	c = &cron.Cron{}
+)
+
+func init() {
+	location, _ := time.LoadLocation("Asia/Taipei")
+	c = cron.New(cron.WithLocation(location))
+}
 
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
@@ -38,6 +47,15 @@ func init() {
 }
 
 func server() {
+	//c.AddFunc("30-59/5 10,15 * * *", func() {
+	//reptile()
+	//autoCommit()
+	//})
+
+	//c.Start()
+
+	//for {
+	//}
 	reptile()
 	autoCommit()
 }
@@ -110,22 +128,28 @@ func buildJson() {
 
 // auto git commit
 func autoCommit() {
-	gitAddcmd := exec.Command("git", "add", ".")
-	gitCommitcmd := exec.Command("git", "commit", "-am", fmt.Sprintf("update code.js at %v", time.Now().Format(time.RFC3339)))
-	gitPushcmd := exec.Command("git", "push", "origin", "master")
+	gitPullCmd := exec.Command("git", "pull", "--all")
+	gitAddCmd := exec.Command("git", "add", ".")
+	gitCommitCmd := exec.Command("git", "commit", "-am", fmt.Sprintf("update code.js at %v", time.Now().Format(time.RFC3339)))
+	gitPushCmd := exec.Command("git", "push", "origin", "master")
+
+	log.Println("git pull --all")
+	if _, err := gitPullCmd.CombinedOutput(); err != nil {
+		log.Println("git pull --all failed")
+	}
 
 	log.Println("git add .")
-	if _, err := gitAddcmd.CombinedOutput(); err != nil {
+	if _, err := gitAddCmd.CombinedOutput(); err != nil {
 		log.Println("git add . failed")
 	}
 
 	log.Println("git commit")
-	if _, err := gitCommitcmd.CombinedOutput(); err != nil {
+	if _, err := gitCommitCmd.CombinedOutput(); err != nil {
 		log.Println("git commit failed")
 	}
 
 	log.Println("git push")
-	if _, err := gitPushcmd.CombinedOutput(); err != nil {
+	if _, err := gitPushCmd.CombinedOutput(); err != nil {
 		log.Println("git push failed")
 	}
 }
