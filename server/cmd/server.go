@@ -49,7 +49,14 @@ func init() {
 
 func server() {
 	log.Println("Sart Server")
-	c.AddFunc("30-59/5 10,15 * * *", func() {
+	//c.AddFunc("30-59/5 10,15 * * *", func() {
+	//reptile()
+	//autoCommit()
+
+	//log.Println("下一次執行時間: ", c.Entry(cron.EntryID(1)).Schedule.Next(time.Now().In(time.Local)))
+	//})
+
+	c.AddFunc("@every 600s", func() {
 		reptile()
 		autoCommit()
 
