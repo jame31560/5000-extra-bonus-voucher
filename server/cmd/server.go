@@ -152,6 +152,7 @@ func autoCommit() {
 
 	// 沒有更動不用推
 	if strings.Contains(string(res), "沒有要提交的檔案，工作區為乾淨狀態") {
+		log.Println("沒有要提交的檔案，工作區為乾淨狀態")
 		return
 	}
 
