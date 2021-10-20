@@ -37,7 +37,7 @@ func init() {
 // serverCmd represents the server command
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "A brief description of your command",
+	Short: "start server cmd",
 	Run: func(cmd *cobra.Command, args []string) {
 		server()
 	},
