@@ -1,5 +1,5 @@
 const WEEKS = 4;
-const EXTRA_BONUS_LIST = [
+const EXTRA_BONUS_LIST1 = [
   {
     id: "domesticTravel",
     name: "交通部「國旅券」",
