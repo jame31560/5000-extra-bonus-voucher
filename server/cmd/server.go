@@ -7,6 +7,7 @@ import (
 	"log"
 	"os/exec"
 	"server/config"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -47,18 +48,19 @@ func init() {
 }
 
 func server() {
+	log.Println("Sart Server")
 	c.AddFunc("30-59/5 10,15 * * *", func() {
 		reptile()
 		autoCommit()
+
+		log.Println("下一次執行時間: ", c.Entry(cron.EntryID(1)).Schedule.Next(time.Now().In(time.Local)))
 	})
 
+	log.Println("第一次執行時間: ", c.Entry(cron.EntryID(1)).Schedule.Next(time.Now().In(time.Local)))
 	c.Start()
 
 	for {
 	}
-
-	//reptile()
-	//autoCommit()
 }
 
 func reptile() {
@@ -130,6 +132,7 @@ func buildJson() {
 // auto git commit
 func autoCommit() {
 	gitPullCmd := exec.Command("git", "pull", "--all")
+	checkCmd := exec.Command("git", "status")
 	gitAddCmd := exec.Command("git", "add", ".")
 	gitCommitCmd := exec.Command("git", "commit", "-am", fmt.Sprintf("update code.js at %v", time.Now().Format(time.RFC3339)))
 	gitPushCmd := exec.Command("git", "push", "origin", "master")
@@ -137,20 +140,36 @@ func autoCommit() {
 	log.Println("git pull --all")
 	if _, err := gitPullCmd.CombinedOutput(); err != nil {
 		log.Println("git pull --all failed")
+		return
+	}
+
+	log.Println("git status")
+	res, err := checkCmd.CombinedOutput()
+	if err != nil {
+		log.Println("git pull --all failed")
+		return
+	}
+
+	// 沒有更動不用推
+	if strings.Contains(string(res), "沒有要提交的檔案，工作區為乾淨狀態") {
+		return
 	}
 
 	log.Println("git add .")
 	if _, err := gitAddCmd.CombinedOutput(); err != nil {
 		log.Println("git add . failed")
+		return
 	}
 
 	log.Println("git commit")
 	if _, err := gitCommitCmd.CombinedOutput(); err != nil {
 		log.Println("git commit failed")
+		return
 	}
 
 	log.Println("git push")
 	if _, err := gitPushCmd.CombinedOutput(); err != nil {
 		log.Println("git push failed")
+		return
 	}
 }
