@@ -261,7 +261,7 @@
               <v-tab class="text-subtitle-1" v-for="(week) in weeks">
                 第{{week}}週
               </v-tab>
-              <v-tabs-items v-model="detailTab">
+              <v-tabs-items v-model="detailTab" touchless>
                 <v-tab-item v-for="(week) in weeks">
                   <v-card color="basil" flat>
                     <v-card-text>
