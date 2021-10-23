@@ -1,11 +1,12 @@
 <template lang="pug">
-router-view
+p dddd
+//- router-view
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-export default defineComponent({
+export default ({
   name: "App",
   setup() {}
 });
