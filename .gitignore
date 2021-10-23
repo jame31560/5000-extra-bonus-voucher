@@ -1,0 +1,2 @@
+# 忽略 webpack 模組包
+web/node_modules
