@@ -1,16 +1,38 @@
 {
-  "name": "web",
+  "name": "vitetodo",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "vue-cli-service lint",
+    "dev": "vite --host"
   },
   "dependencies": {
-    "vue": "^3.2.16"
+    "axios": "^0.21.1",
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.9.3",
-    "vite": "^2.6.4"
+    "@types/node": "^16.4.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "@vitejs/plugin-vue": "^1.2.5",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/compiler-sfc": "^3.0.5",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "autoprefixer": "^10.3.1",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^6.0.1",
+    "postcss": "^8.3.6",
+    "prettier": "^2.2.1",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.1.0",
+    "tailwindcss": "^2.2.6",
+    "typescript": "^4.3.2",
+    "vite": "^2.4.3",
+    "vue-cli-plugin-pug": "~2.0.0",
+    "vue-tsc": "^0.0.24"
   }
 }
