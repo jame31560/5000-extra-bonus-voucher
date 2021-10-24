@@ -17,7 +17,7 @@ export default defineConfig({
         find: "@",
         replacement: pathResolve('src') + '/',
       }
-  ]
+    ]
   },
   server: {
     port: 8080,
