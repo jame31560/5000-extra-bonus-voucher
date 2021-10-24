@@ -1,6 +1,7 @@
 <template lang="pug">
 #Home 
   p Home
+  a-button ddd
 </template>
 <script>
 export default {
