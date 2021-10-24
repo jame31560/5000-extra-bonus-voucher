@@ -1,8 +1,14 @@
 <template lang="pug">
-router-view 
+a-layout.h-screen
+  a-layout-header.text-left.bg-blue-500.flex.items-center
+    h6.text-white.text-xl 五倍加碼券抽籤 - 中籤快速查詢
+  a-layout-content
+    router-view.h-full
+  a-layout-footer
+    .notice
+    .
 </template>
-<script lang="ts">
-// import { defineComponent } from "vue";
+<script>
 export default ({
   name: "App",
   setup() {}
@@ -11,11 +17,8 @@ export default ({
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Noto Sans TC", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
