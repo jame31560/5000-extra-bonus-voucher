@@ -56,6 +56,9 @@ func server() {
 	//log.Println("下一次執行時間: ", c.Entry(cron.EntryID(1)).Schedule.Next(time.Now().In(time.Local)))
 	//})
 
+	reptile()
+	autoCommit()
+
 	c.AddFunc("@every 600s", func() {
 		reptile()
 		autoCommit()
@@ -92,7 +95,7 @@ func getScriptData() (string, error) {
 
 	s := doc.Find("script")
 
-	script := s.Nodes[2].FirstChild.Data
+	script := s.Nodes[len(s.Nodes)-1].FirstChild.Data
 
 	return script, nil
 }
