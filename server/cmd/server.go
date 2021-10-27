@@ -59,7 +59,7 @@ func server() {
 	reptile()
 	autoCommit()
 
-	c.AddFunc("@every 600s", func() {
+	c.AddFunc("@every 60s", func() {
 		reptile()
 		autoCommit()
 
